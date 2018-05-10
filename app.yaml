@@ -1,0 +1,73 @@
+application: time-bank-app
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+
+- url: /templates
+  static_dir: templates
+  application_readable: true
+
+- url: /pay
+  script: handlers.paydemand.app
+  login: required
+
+- url: /boardDemandsAccept
+  script: handlers.listdemandsaccepted.app
+  login: required
+
+- url: /boardDemands
+  script: handlers.listalldemands.app
+  login: required
+
+- url: /demandRefuse
+  script: handlers.listalldemands.app
+  login: required
+
+- url: /demandAccept
+  script: handlers.listalldemands.app
+  login: required
+
+- url: /profession
+  script: handlers.professionhandler.app
+  login: required
+
+- url: /contract
+  script: handlers.contractprofession.app
+  login: required
+
+- url: /deleteDemand
+  script: handlers.deletedemand.app
+  login: required
+
+- url: /delete
+  script: handlers.deleteprofession.app
+  login: required
+
+- url: /add
+  script: handlers.addprofession.app
+  login: required
+
+- url: /myBoard
+  script: handlers.listallprofessions.app
+  login: required
+
+- url: /board
+  script: handlers.listallprofessions.app
+  login: required
+
+- url: .*
+  script: handlers.main.app
+
+libraries:
+- name: webapp2
+  version: latest
+
+- name: jinja2
+  version: latest

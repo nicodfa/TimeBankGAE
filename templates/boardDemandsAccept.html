@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <title>Solicitudes Enviadas</title>
+</head>
+
+<body>
+<div class="container">
+    <div class="header-page">
+        <h1>Solicitudes Enviadas</h1>
+    </div>
+    <div class="btn-group btn-group-justified">
+        <a href="/board" class="btn btn-primary">Tablón</a>
+        <a href="/add" class="btn btn-primary">Añadir Profesión</a>
+        <a href="/boardDemandsAccept" class="btn btn-primary">Solicitudes Enviadas</a>
+        <a href="/boardDemands" class="btn btn-primary">Solicitudes Recibidas</a>
+    </div>
+
+    {% if demands.count()>0 %}
+        <div class="list-group">
+            {% for demand in demands %}
+
+                {% if demand.userDemand == user.user_id() and demand.accepted != None %}
+                    <div class="list-group-item">
+                        <h2 class="list-group-item-heading">{{ demand.profession }}</h2>
+                        <ul class="list-group-item-text">
+                            <li>Publicado por: {{ user.nickname() }}</li>
+                            <li>Fecha de solicitud: {{ demand.date }}</li>
+                            <li>Coste: {{ demand.price }}</li>
+                            <li>Solicitud aceptada</li>
+                        </ul>
+                        {% if demand.accepted == True %}
+                            {% if demand.price <= userTime %}
+                                <a href="/pay?demand_id={{ demand.key.urlsafe() }}" class="btn btn-success"
+                                   role="button">Pagar</a>
+                            {% else %}
+                                <a href="/board" class="btn btn-success"
+                                   role="button">No tienes saldo suficiente</a>
+                            {% endif %}
+                        {% else %}
+                            <a href="/deleteDemand?demand_id={{ demand.key.urlsafe() }}" class="btn btn-danger"
+                               role="button">Solicitud rechazada (Click para eliminar)</a>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="list-group">
+            <a class="list-group-item"><h2 class="list-group-item-heading">No hay solicitudes enviadas</h2></a>
+        </div>
+    {% endif %}
+    <div>
+        <ul class="pager">
+            <li class="previous"><a href="{{ user_logout }}">Logout</a></li>
+        </ul>
+    </div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Time Bank</title>
+</head>
+
+<body>
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-8"><h1 class="header-page">Hola {{ usertb.username }}</h1></div>
+        <div class="col-sm-4"><p>Tu saldo es de: {{ usertb.userTime }} horas</p></div>
+    </div>
+
+    <div class="btn-group btn-group-justified">
+        <a href="/myBoard" class="btn btn-primary">Mi tablón</a>
+        <a href="/add" class="btn btn-primary">Añadir Profesión</a>
+        <a href="/boardDemandsAccept" class="btn btn-primary">Solicitudes Enviadas</a>
+        <a href="/boardDemands" class="btn btn-primary">Solicitudes Recibidas</a>
+    </div>
+
+    {% if professions.count() > 0 %}
+        {% for profession in professions %}
+            <div class="list-group">
+                <a href="/profession?profession_id={{ profession.key.urlsafe() }}" class="list-group-item">
+                    <h2 class="list-group-item-heading">{{ profession.title }}</h2>
+                    <p class="list-group-item-text">
+                        {{ profession.content }}
+                        Fecha de publicación: {{ profession.date }}
+                    </p>
+                    {% if profession.user == usertb.id_user %}
+                        <a href="/delete?profession_id={{ profession.key.urlsafe() }}" class="btn btn-info"
+                           role="button">Borrar
+                            Profesión</a>
+                    {% endif %}
+                </a>
+
+            </div>
+        {% endfor %}
+
+    {% else %}
+        <div class="list-group">
+            <a class="list-group-item"> <h2 class="list-group-item-heading">No hay profesiones publicadas.</h2></a>
+        </div>
+    {% endif %}
+    <div>
+        <ul class="pager">
+            <li class="previous"><a href="{{ user_logout }}">Logout</a></li>
+        </ul>
+    </div>
+</div>
+</body>
+
+</html>

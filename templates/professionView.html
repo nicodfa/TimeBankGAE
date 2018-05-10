@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <title>{{ profession.title }}</title>
+</head>
+
+<body>
+<div class="container well">
+    <div class="header-page">
+        <blockquote>
+            <h1 class="well text-capitalize" style="background-color:#FFFFFF;">{{ profession.title }}</h1>
+            <footer>{{ profession.content }}</footer>
+        </blockquote>
+
+    </div>
+    <div class="row container">
+        <div class="col-sm-4 well well-sm" style="background-color:#FFFFFF;">Coste: {{ profession.price }} horas.</div>
+        <div class="col-sm-8"> Fecha de publicación: {{ profession.date }}</div>
+    </div>
+    <div>
+        <a href="/contract?profession_id={{ profession.key.urlsafe() }}"
+           class="btn btn-info btn-sm">Contratar</a>
+    </div>
+    <div>
+        <ul class="pager">
+            <li class="previous"><a href="/board">Volver</a></li>
+        </ul>
+    </div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <title>Añadir Profession</title>
+
+<body>
+
+<script type="text/javascript">
+    /*function hideError() {
+                                          document.getElementById( "dvError" ).style.display = "none";
+                                      }
+
+                                      function showError(msg) {
+                                          var dvError = document.getElementById( "dvError" );
+                                          var pError = document.createElement( "p" );
+
+                                          dvError.innerHTML = "";
+                                          dvError.appendChild( pError );
+                                          pError.appendChild( document.createTextNode( msg ) );
+                                          dvError.style.display = "block";
+                                      }*/
+
+    function showError() {
+        const Error = document.getElementById("Error");
+
+        Error.innerHTML = msg;
+        Error.style.display = "block";
+    }
+
+    function addProfession() {
+        var toret = true;
+        var edTitle = document.getElementById("edTitle");
+        var edContent = document.getElementById("edContent");
+        var edPrice = document.getElementById("edPrice");
+
+        //hideError();
+        const Error = document.getElementById("Error");
+
+        Error.style.display = "none";
+
+        if (edTitle.value.trim().length == 0) {
+            showError("El titulo de la profession es obligatorio");
+            toret = false;
+        }
+
+        if (edContent.value.trim().length == 0) {
+            showError("Introduce información sobre el trabajo que realizas");
+            toret = false;
+        }
+
+        var price = parseInt(edPrice.value, 10);
+
+        if (price < 1) {
+            showError("Precio no valido!!");
+            toret = false;
+        }
+
+        return toret;
+    }
+</script>
+
+<div class="container well">
+    <h2>Añadir profesión</h2>
+    <form id="formProfessions" class="form-horizontal" onsubmit="javascript: return addProfession();" action="/add"
+          method="post">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="title">Titulo:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="title" id="edTitle" size="30"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="content">Descripcion:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="content" id="edContent" size="40"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="price">Coste:</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" name="price" id="edPrice" size="70"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="submit" id="btSend" class="btn btn-primary" value="Añadir"/>
+            </div>
+        </div>
+
+        <div>
+            <ul class="pager">
+                <li class="previous"><a href="/board">Volver</a></li>
+            </ul>
+        </div>
+    </form>
+
+</div>
+
+</body>
+
+</html>
